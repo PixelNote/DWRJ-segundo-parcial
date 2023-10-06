@@ -9,22 +9,23 @@ const MealPreviwGrid = () => {
 	const [meals, setMeals] = useState([]);
 	const { search } = useSearch();
 
-	useEffect(() => { 
+	useEffect(() => {
+		if(search===''){
 		async function Data(){
 		const data = await SearchMealByName("b");
 		setMeals(data);
 	}
 	Data()
-}, []);
+}}, [search]);
 
 	useEffect(()=>{
-		setMeals([])
+		if(search!==''){
 		async function Data(){
 		const data = await SearchMealByName(search);
 		setMeals(data);	
 	}
 		Data()
-}, [search]);
+}}, [search]);
 
 	console.log(meals) 
 
