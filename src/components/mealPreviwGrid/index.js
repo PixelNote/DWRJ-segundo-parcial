@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SearchMealByName } from "../../services/mealtService.js";
+import { SearchMealByName, FetchMealByFirstLetter } from "../../services/mealtService.js";
 import MealPreviw from '../mealPreview/index'
 import { useSearch } from "../context/searchContext";
 import './index.css';
@@ -9,23 +9,29 @@ const MealPreviwGrid = () => {
 	const [meals, setMeals] = useState([]);
 	const { search } = useSearch();
 
-	useEffect(() => {
-		if(search===''){
+	useEffect(()=>{
 		async function Data(){
-		const data = await SearchMealByName("b");
-		setMeals(data);
+		const data = await FetchMealByFirstLetter('b');
+		setMeals(data);	
 	}
 	Data()
-}}, [search]);
+},[]);
+
 
 	useEffect(()=>{
-		if(search!==''){
+		if(search===''){
 		async function Data(){
-		const data = await SearchMealByName(search);
+		const data = await FetchMealByFirstLetter('b');
 		setMeals(data);	
 	}
 		Data()
-}}, [search]);
+	}else{
+	async function Data(){
+	const data = await SearchMealByName(search);
+	setMeals(data);
+	}
+	Data()
+	}}, [search]);
 
 	console.log(meals) 
 
